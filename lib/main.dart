@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
-import 'package:luvit/src/features/bottom_nav/bottom_nav_bar.dart';
-import 'package:luvit/src/features/bottom_nav/bottom_nav_bar.dart';
+import 'package:luvit/src/features/bottom_nav/view/bottom_nav_bar.dart';
+import 'package:luvit/src/features/bottom_nav/view/bottom_nav_bar.dart';
 import 'package:luvit/src/provider/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -17,6 +17,7 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
+      debugShowCheckedModeBanner: false,
       title: 'Luvit',
       theme: ThemeData(
         colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),

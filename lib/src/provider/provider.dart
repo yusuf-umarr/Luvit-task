@@ -1,23 +1,19 @@
-import 'dart:async';
 import 'dart:developer';
 import 'package:flutter/material.dart';
-
-import 'package:luvit/src/features/home/widget.dart';
+import 'package:luvit/src/features/home/models/home_model.dart';
 
 class SwipeProvider with ChangeNotifier {
   final controller = PageController(initialPage: 0);
   int currentIndex = 0;
   int navbarIndex = 0;
-
   bool get isLastPage => currentIndex == pages.length - 1;
 
   bool get isFirstPage => currentIndex == pages.first;
 
-  List<Widget> pages = [];
+  List pages = [];
 
   setCurrentIndex(index) {
     currentIndex = index;
-
     notifyListeners();
   }
 
@@ -42,60 +38,21 @@ class SwipeProvider with ChangeNotifier {
   }
 
   void loadPage() {
-    pages = <Widget>[
-      HomeWidget(
-        prevOntap: () {
-          prevBtn();
-        },
-        nextOntap: () {
-          nextBtn();
-        },
-        swipeImage: "assets/101_Main_Profile01.png",
-      ),
-      HomeWidget(
-        prevOntap: () {
-          prevBtn();
-        },
-        nextOntap: () {
-          nextBtn();
-        },
-        swipeImage: "assets/102_Main_Profile02.png",
-      ),
-      HomeWidget(
-        prevOntap: () {
-          prevBtn();
-        },
-        nextOntap: () {
-          nextBtn();
-        },
-        swipeImage: "assets/103_Main_Profile03.png",
-      ),
-      HomeWidget(
-        prevOntap: () {
-          prevBtn();
-        },
-        nextOntap: () {
-          nextBtn();
-        },
-        swipeImage: "assets/103_Main_Profile03.png",
-      ),
-      HomeWidget(
-        prevOntap: () {
-          prevBtn();
-        },
-        nextOntap: () {
-          nextBtn();
-        },
-        swipeImage: "assets/103_Main_Profile03.png",
-      ),
+    pages = [
+      HomeModel("assets/101_Main_Profile01.png", 0),
+      HomeModel("assets/102_Main_Profile02.png", 1),
+      HomeModel("assets/103_Main_Profile03.png", 2),
+      HomeModel("assets/103_Main_Profile03.png", 3),
+      HomeModel("assets/103_Main_Profile03.png", 4),
     ];
   }
 
   removeCurrentPage(index) {
     log("curent index $index");
-    pages.removeAt(index);
+    if (pages.isNotEmpty) {
+      pages.removeAt(index);
+    }
 
-    log("pages total:${pages.length}");
     notifyListeners();
   }
 

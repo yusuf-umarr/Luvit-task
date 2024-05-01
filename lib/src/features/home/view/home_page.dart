@@ -1,8 +1,10 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
-import 'package:luvit/src/features/home/widget.dart';
+import 'package:luvit/src/features/home/widget/home_widget.dart';
 import 'package:luvit/src/provider/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -46,51 +48,69 @@ class _HomePageState extends State<HomePage> {
         ),
         width: size.width,
         child: Builder(builder: (context) {
+       
           if (providerWatch.pages.isEmpty) {
-            return Padding(
-              padding: const EdgeInsets.all(20),
+            return const Padding(
+              padding: EdgeInsets.all(20),
               child: Card(
-                child: Container(
-                  child: Center(child: Text("110 No Cards")),
-                ),
+                child: Center(child: Text("110 No Cards")),
               ),
             );
           }
+
           return Column(
             mainAxisAlignment: MainAxisAlignment.spaceBetween,
             crossAxisAlignment: CrossAxisAlignment.center,
             children: <Widget>[
               Draggable(
                 onDraggableCanceled: (velocity, offset) {
-                  if (offset.dx < 0 && offset.dy > 0) {
+                  // if (offset.dx < 0 || offset.dy > 0) {
+                  // providerRead.removeCurrentPage(providerWatch.currentIndex);
+                  //   print("Dragged to left and bottom!");
+                  // }
+
+                  if (offset.dx <= -200) {
+                    log("offset.dx left:${offset.dx}");
                     providerRead.removeCurrentPage(providerWatch.currentIndex);
-                    print("Dragged to left and bottom!");
+                    print("Dragged to left");
                   }
+                  if (offset.dy >= 300) {
+                    log("offset.dy right:${offset.dy}");
+
+                    // log("offset.dx left:${offset.dx}");
+                    providerRead.removeCurrentPage(providerWatch.currentIndex);
+                    print("Dragged to right");
+                  }
+                  setState(() {});
                 },
                 feedback: Card(
                   child: SizedBox(
                     height: size.height * 0.72,
+                    width: size.width * 0.9,
                     child: Center(
-                      child: providerWatch.pages[providerWatch.currentIndex],
-                    ),
+                        child:
+                            HomeWidget(
+                      swipeImage: providerWatch
+                          .pages[providerWatch.currentIndex].imageAsset,
+                    )),
                   ),
                 ),
-                child: SizedBox(
-                  height: size.height * 0.72,
-                  child: PageView(
-                    physics: const NeverScrollableScrollPhysics(),
-                    scrollDirection: Axis.horizontal,
-                    controller: providerWatch.controller,
-                    onPageChanged: (index) {
-                      setState(() {
-                        providerWatch.currentIndex = index;
-
-                        providerRead.setCurrentIndex(index);
-                      });
-                    },
-                    children: providerWatch.pages,
-                  ),
-                ),
+                child: Consumer<SwipeProvider>(builder: (context, val, _) {
+                  return SizedBox(
+                    height: size.height * 0.72,
+                    child: PageView.builder(
+                        physics: const NeverScrollableScrollPhysics(),
+                        controller: val.controller,
+                        onPageChanged: val.setCurrentIndex,
+                        itemCount: val.pages.length,
+                        itemBuilder: (context, index) {
+                          var page = val.pages[index];
+                          return HomeWidget(
+                            swipeImage: page.imageAsset,
+                          );
+                        }),
+                  );
+                }),
               ),
             ],
           );

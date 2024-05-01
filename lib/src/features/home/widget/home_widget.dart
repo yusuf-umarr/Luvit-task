@@ -2,26 +2,23 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
-import 'package:luvit/src/features/home/dot_indicator.dart';
+import 'package:luvit/src/features/home/widget/dot_indicator.dart';
 import 'package:luvit/src/provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class HomeWidget extends StatelessWidget {
   final String swipeImage;
 
-  final Function()? prevOntap;
-  final Function()? nextOntap;
-
   const HomeWidget({
     required this.swipeImage,
-    this.prevOntap,
-    this.nextOntap,
+
     Key? key,
   }) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
     final providerWatch = context.watch<SwipeProvider>();
+    final providerRead = context.read<SwipeProvider>();
 
     final Size size = MediaQuery.of(context).size;
 
@@ -60,7 +57,9 @@ class HomeWidget extends StatelessWidget {
               left: 0,
               top: 0,
               child: InkWell(
-                onTap: prevOntap,
+                onTap: () {
+                  providerRead.prevBtn();
+                },
                 child: Container(
                   width: size.width * 0.25,
                   height: size.height * 0.055,
@@ -73,7 +72,9 @@ class HomeWidget extends StatelessWidget {
               right: 0,
               top: 0,
               child: InkWell(
-                onTap: nextOntap,
+                onTap: () {
+                  providerRead.nextBtn();
+                },
                 child: Container(
                   width: size.width * 0.25,
                   height: size.height * 0.055,

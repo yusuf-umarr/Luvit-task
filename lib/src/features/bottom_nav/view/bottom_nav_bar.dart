@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
-import 'package:luvit/src/features/home/home_page.dart';
+import 'package:luvit/src/features/home/view/home_page.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
