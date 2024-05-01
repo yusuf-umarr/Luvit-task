@@ -17,7 +17,7 @@ class NewPageIndicator extends StatelessWidget {
   Widget _buildIndicator(int index, size) {
     bool isSelected = index == currentPage;
     return Container(
-      width: size.width * 0.15,
+      width: size.width * 0.12,
       height: 4.0,
       margin: const EdgeInsets.symmetric(horizontal: 3.0),
       decoration: BoxDecoration(

@@ -11,7 +11,6 @@ class HomeWidget extends StatelessWidget {
 
   const HomeWidget({
     required this.swipeImage,
-
     Key? key,
   }) : super(key: key);
 
@@ -23,7 +22,7 @@ class HomeWidget extends StatelessWidget {
     final Size size = MediaQuery.of(context).size;
 
     return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 20.0),
+      padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
         decoration: BoxDecoration(
           image: DecorationImage(
@@ -85,7 +84,7 @@ class HomeWidget extends StatelessWidget {
             ),
             Positioned(
               child: Padding(
-                padding: const EdgeInsets.only(top: 10),
+                padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Align(
                   alignment: Alignment.topCenter,
                   child: NewPageIndicator(
@@ -104,7 +103,7 @@ class HomeWidget extends StatelessWidget {
 
   SizedBox userDetailCard(context) {
     return SizedBox(
-      width: MediaQuery.of(context).size.width * 0.77,
+      width: MediaQuery.of(context).size.width * 0.68,
       child: Row(
         mainAxisAlignment: MainAxisAlignment.spaceBetween,
         children: [

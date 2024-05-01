@@ -1,6 +1,7 @@
 import 'dart:developer';
 
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
@@ -48,7 +49,6 @@ class _HomePageState extends State<HomePage> {
         ),
         width: size.width,
         child: Builder(builder: (context) {
-       
           if (providerWatch.pages.isEmpty) {
             return const Padding(
               padding: EdgeInsets.all(20),
@@ -64,51 +64,82 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Draggable(
                 onDraggableCanceled: (velocity, offset) {
-                  // if (offset.dx < 0 || offset.dy > 0) {
-                  // providerRead.removeCurrentPage(providerWatch.currentIndex);
-                  //   print("Dragged to left and bottom!");
+                  if (offset.dx <= -200 || offset.dy >= 300) {
+                    providerRead.removeCurrentPage(providerWatch.currentIndex);
+                    print("Dragged to left and bottom!");
+                  }
+
+                  // if (offset.dx <= -200) {
+                  //   providerRead.removeCurrentPage(providerWatch.currentIndex);
                   // }
+                  // if (offset.dy >= 300) {
 
-                  if (offset.dx <= -200) {
-                    log("offset.dx left:${offset.dx}");
-                    providerRead.removeCurrentPage(providerWatch.currentIndex);
-                    print("Dragged to left");
-                  }
-                  if (offset.dy >= 300) {
-                    log("offset.dy right:${offset.dy}");
-
-                    // log("offset.dx left:${offset.dx}");
-                    providerRead.removeCurrentPage(providerWatch.currentIndex);
-                    print("Dragged to right");
-                  }
+                  //   providerRead.removeCurrentPage(providerWatch.currentIndex);
+                  // }
                   setState(() {});
                 },
                 feedback: Card(
                   child: SizedBox(
                     height: size.height * 0.72,
-                    width: size.width * 0.9,
-                    child: Center(
-                        child:
-                            HomeWidget(
+                    // width: size.width * 0.9,
+                    child: HomeWidget(
                       swipeImage: providerWatch
                           .pages[providerWatch.currentIndex].imageAsset,
-                    )),
+                    ),
                   ),
                 ),
                 child: Consumer<SwipeProvider>(builder: (context, val, _) {
-                  return SizedBox(
-                    height: size.height * 0.72,
-                    child: PageView.builder(
-                        physics: const NeverScrollableScrollPhysics(),
-                        controller: val.controller,
-                        onPageChanged: val.setCurrentIndex,
-                        itemCount: val.pages.length,
-                        itemBuilder: (context, index) {
-                          var page = val.pages[index];
-                          return HomeWidget(
-                            swipeImage: page.imageAsset,
-                          );
-                        }),
+                  return Stack(
+                    children: [
+                      SizedBox(
+                        height: size.height * 0.72,
+                        child: PageView.builder(
+                            physics: const NeverScrollableScrollPhysics(),
+                            controller: val.controller,
+                            onPageChanged: val.setCurrentIndex,
+                            itemCount: val.pages.length,
+                            itemBuilder: (context, index) {
+                              var page = val.pages[index];
+                              return HomeWidget(
+                                swipeImage: page.imageAsset,
+                              );
+                            }),
+                      ),
+                      //left
+                      if (val.pages.length == 1)
+                        const SizedBox()
+                      else
+                        Positioned(
+                          top: 0,
+                          left: size.width * -0.86,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.grey),
+                            child: SizedBox(
+                                height: size.height * 0.72,
+                                width: size.width * 0.9,
+                                child: Text("")),
+                          ),
+                        ),
+                      //right
+                      if (val.pages.length == 1)
+                        const SizedBox()
+                      else
+                        Positioned(
+                          top: 0,
+                          right: size.width * -0.86,
+                          child: Container(
+                            decoration: BoxDecoration(
+                                borderRadius: BorderRadius.circular(15),
+                                color: Colors.grey),
+                            child: SizedBox(
+                                height: size.height * 0.72,
+                                width: size.width * 0.9,
+                                child: Text("")),
+                          ),
+                        )
+                    ],
                   );
                 }),
               ),
