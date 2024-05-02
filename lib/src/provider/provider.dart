@@ -5,6 +5,7 @@ import 'package:luvit/src/features/home/models/home_model.dart';
 class SwipeProvider with ChangeNotifier {
   final controller = PageController(initialPage: 0);
   int currentIndex = 0;
+  int modelId = 0;
   int navbarIndex = 0;
   bool get isLastPage => currentIndex == pages.length - 1;
 
@@ -15,6 +16,12 @@ class SwipeProvider with ChangeNotifier {
   setCurrentIndex(index) {
     currentIndex = index;
     notifyListeners();
+  }
+
+  setModelId(index) {
+    if (index != null) {
+      modelId = index;
+    }
   }
 
   void nextBtn() {
@@ -47,13 +54,8 @@ class SwipeProvider with ChangeNotifier {
     ];
   }
 
-  removeCurrentPage(index) {
-    log("curent index $index");
-    if (pages.isNotEmpty) {
-      pages.removeAt(index);
-    }
-
-    notifyListeners();
+  removeCurrentPage() {
+    pages.removeWhere((element) => element.id == modelId);
   }
 
   setNavbarIndex(index) {

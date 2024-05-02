@@ -1,7 +1,4 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
@@ -30,6 +27,8 @@ class _HomePageState extends State<HomePage> {
     final Size size = MediaQuery.of(context).size;
     final providerRead = context.read<SwipeProvider>();
     final providerWatch = context.watch<SwipeProvider>();
+
+    // log("total length ${providerWatch.pages.length}");
 
     return Scaffold(
       appBar: AppBar(
@@ -64,30 +63,27 @@ class _HomePageState extends State<HomePage> {
             children: <Widget>[
               Draggable(
                 onDraggableCanceled: (velocity, offset) {
-                  if (offset.dx <= -200 || offset.dy >= 300) {
-                    providerRead.removeCurrentPage(providerWatch.currentIndex);
-                    print("Dragged to left and bottom!");
+                  if (offset.dx <= -100 || offset.dy >= 100) {
+                    providerRead.removeCurrentPage();
+                    // print(
+                    //     "Dragged to left and bottom! ${providerWatch.currentIndex}");
                   }
 
-                  // if (offset.dx <= -200) {
-                  //   providerRead.removeCurrentPage(providerWatch.currentIndex);
-                  // }
-                  // if (offset.dy >= 300) {
-
-                  //   providerRead.removeCurrentPage(providerWatch.currentIndex);
-                  // }
                   setState(() {});
                 },
-                feedback: Card(
-                  child: SizedBox(
-                    height: size.height * 0.72,
-                    // width: size.width * 0.9,
-                    child: HomeWidget(
-                      swipeImage: providerWatch
-                          .pages[providerWatch.currentIndex].imageAsset,
+                feedback: Builder(builder: (context) {
+                  return Card(
+                    margin: EdgeInsets.zero,
+                    child: SizedBox(
+                      height: size.height * 0.72,
+                      width: size.width * 0.9,
+                      child: HomeWidget(
+                        swipeImage: providerWatch
+                            .pages[providerWatch.modelId].imageAsset,
+                      )
                     ),
-                  ),
-                ),
+                  );
+                }),
                 child: Consumer<SwipeProvider>(builder: (context, val, _) {
                   return Stack(
                     children: [
@@ -102,11 +98,12 @@ class _HomePageState extends State<HomePage> {
                               var page = val.pages[index];
                               return HomeWidget(
                                 swipeImage: page.imageAsset,
+                                id: page.id,
                               );
                             }),
                       ),
                       //left
-                      if (val.pages.length == 1)
+                      if (providerWatch.currentIndex == 0)
                         const SizedBox()
                       else
                         Positioned(
@@ -123,7 +120,7 @@ class _HomePageState extends State<HomePage> {
                           ),
                         ),
                       //right
-                      if (val.pages.length == 1)
+                      if (providerWatch.currentIndex == 4)
                         const SizedBox()
                       else
                         Positioned(

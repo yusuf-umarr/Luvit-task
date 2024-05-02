@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
@@ -8,9 +10,11 @@ import 'package:provider/provider.dart';
 
 class HomeWidget extends StatelessWidget {
   final String swipeImage;
+  final int? id;
 
   const HomeWidget({
     required this.swipeImage,
+     this.id,
     Key? key,
   }) : super(key: key);
 
@@ -20,6 +24,8 @@ class HomeWidget extends StatelessWidget {
     final providerRead = context.read<SwipeProvider>();
 
     final Size size = MediaQuery.of(context).size;
+
+    providerRead.setModelId(id);
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
