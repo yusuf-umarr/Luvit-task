@@ -13,6 +13,8 @@ class SwipeProvider with ChangeNotifier {
 
   List pages = [];
 
+  String remvedImg = '';
+
   setCurrentIndex(index) {
     currentIndex = index;
     notifyListeners();
@@ -55,11 +57,34 @@ class SwipeProvider with ChangeNotifier {
   }
 
   removeCurrentPage() {
-    pages.removeWhere((element) => element.id == modelId);
+    pages.removeWhere((element) {
+      if (element.id == modelId) {
+        remvedImg = element.imageAsset;
+      }
+
+      return element.id == modelId;
+    });
+
+    notifyListeners();
   }
 
   setNavbarIndex(index) {
     navbarIndex = index;
+    notifyListeners();
+  }
+
+  resetState() {
+    modelId = 0;
+    currentIndex = 0;
+
+    pages = [
+      HomeModel("assets/101_Main_Profile01.png", 0),
+      HomeModel("assets/102_Main_Profile02.png", 1),
+      HomeModel("assets/103_Main_Profile03.png", 2),
+      HomeModel("assets/103_Main_Profile03.png", 3),
+      HomeModel("assets/103_Main_Profile03.png", 4),
+    ];
+
     notifyListeners();
   }
 

@@ -2,15 +2,15 @@ import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
 import 'package:luvit/src/features/home/view/home_page.dart';
+import 'package:luvit/src/provider/provider.dart';
+import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatefulWidget {
   @override
-  _BottomNavBarState createState() =>
-      _BottomNavBarState();
+  _BottomNavBarState createState() => _BottomNavBarState();
 }
 
-class _BottomNavBarState
-    extends State<BottomNavBar> {
+class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
   static const List<Widget> _screens = [
@@ -89,12 +89,10 @@ class _BottomNavBarState
                         setState(() {
                           _selectedIndex = e['id'];
                         });
+                        context.read<SwipeProvider>().resetState();
                       },
                     );
-                  }).toList()
-
-              
-                  ),
+                  }).toList()),
             ),
           ),
         ),

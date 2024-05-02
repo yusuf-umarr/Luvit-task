@@ -65,8 +65,7 @@ class _HomePageState extends State<HomePage> {
                 onDraggableCanceled: (velocity, offset) {
                   if (offset.dx <= -100 || offset.dy >= 100) {
                     providerRead.removeCurrentPage();
-                    // print(
-                    //     "Dragged to left and bottom! ${providerWatch.currentIndex}");
+                  
                   }
 
                   setState(() {});
@@ -78,8 +77,8 @@ class _HomePageState extends State<HomePage> {
                       height: size.height * 0.72,
                       width: size.width * 0.9,
                       child: HomeWidget(
-                        swipeImage: providerWatch
-                            .pages[providerWatch.modelId].imageAsset,
+                        swipeImage: providerWatch.remvedImg,
+                      
                       )
                     ),
                   );
@@ -116,7 +115,7 @@ class _HomePageState extends State<HomePage> {
                             child: SizedBox(
                                 height: size.height * 0.72,
                                 width: size.width * 0.9,
-                                child: Text("")),
+                                child: const Text(""),),
                           ),
                         ),
                       //right
@@ -133,7 +132,7 @@ class _HomePageState extends State<HomePage> {
                             child: SizedBox(
                                 height: size.height * 0.72,
                                 width: size.width * 0.9,
-                                child: Text("")),
+                                child: const Text(""),),
                           ),
                         )
                     ],
