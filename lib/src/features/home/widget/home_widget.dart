@@ -1,10 +1,8 @@
-import 'dart:developer';
-
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
 import 'package:luvit/src/core/constant/app_color.dart';
-import 'package:luvit/src/features/home/widget/dot_indicator.dart';
+import 'package:luvit/src/features/home/widget/indicator.dart';
 import 'package:luvit/src/provider/provider.dart';
 import 'package:provider/provider.dart';
 
@@ -14,7 +12,7 @@ class HomeWidget extends StatelessWidget {
 
   const HomeWidget({
     required this.swipeImage,
-     this.id,
+    this.id,
     Key? key,
   }) : super(key: key);
 
@@ -22,11 +20,8 @@ class HomeWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final providerWatch = context.watch<SwipeProvider>();
     final providerRead = context.read<SwipeProvider>();
-
     final Size size = MediaQuery.of(context).size;
-
     providerRead.setModelId(id);
-
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 30.0),
       child: Container(
@@ -93,10 +88,10 @@ class HomeWidget extends StatelessWidget {
                 padding: const EdgeInsets.only(top: 10, left: 20, right: 20),
                 child: Align(
                   alignment: Alignment.topCenter,
-                  child: NewPageIndicator(
+                  child: PageIndicator(
                     currentPage: providerWatch.currentIndex,
                     pageCount: providerWatch
-                        .pages.length, // Replace with your total page count
+                        .pages.length, 
                   ),
                 ),
               ),

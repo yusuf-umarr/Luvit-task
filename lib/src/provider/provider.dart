@@ -13,7 +13,7 @@ class SwipeProvider with ChangeNotifier {
 
   List pages = [];
 
-  String remvedImg = '';
+  String removedImg = '';
 
   setCurrentIndex(index) {
     currentIndex = index;
@@ -23,6 +23,11 @@ class SwipeProvider with ChangeNotifier {
   setModelId(index) {
     if (index != null) {
       modelId = index;
+      pages.forEach((element) {
+        if (element.id == modelId) {
+          removedImg = element.imageAsset;
+        }
+      });
     }
   }
 
@@ -54,14 +59,11 @@ class SwipeProvider with ChangeNotifier {
       HomeModel("assets/103_Main_Profile03.png", 3),
       HomeModel("assets/103_Main_Profile03.png", 4),
     ];
+    removedImg = pages[0].imageAsset;
   }
 
   removeCurrentPage() {
     pages.removeWhere((element) {
-      if (element.id == modelId) {
-        remvedImg = element.imageAsset;
-      }
-
       return element.id == modelId;
     });
 

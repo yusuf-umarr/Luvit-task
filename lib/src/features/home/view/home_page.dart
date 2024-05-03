@@ -1,3 +1,5 @@
+import 'dart:developer';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_svg/flutter_svg.dart';
 import 'package:luvit/src/core/common_widget/widget.dart';
@@ -28,7 +30,7 @@ class _HomePageState extends State<HomePage> {
     final providerRead = context.read<SwipeProvider>();
     final providerWatch = context.watch<SwipeProvider>();
 
-    // log("total length ${providerWatch.pages.length}");
+    bool isLeftBottom = false;
 
     return Scaffold(
       appBar: AppBar(
@@ -65,7 +67,6 @@ class _HomePageState extends State<HomePage> {
                 onDraggableCanceled: (velocity, offset) {
                   if (offset.dx <= -100 || offset.dy >= 100) {
                     providerRead.removeCurrentPage();
-                  
                   }
 
                   setState(() {});
@@ -74,13 +75,11 @@ class _HomePageState extends State<HomePage> {
                   return Card(
                     margin: EdgeInsets.zero,
                     child: SizedBox(
-                      height: size.height * 0.72,
-                      width: size.width * 0.9,
-                      child: HomeWidget(
-                        swipeImage: providerWatch.remvedImg,
-                      
-                      )
-                    ),
+                        height: size.height * 0.72,
+                        width: size.width * 0.9,
+                        child: HomeWidget(
+                          swipeImage: providerWatch.removedImg,
+                        )),
                   );
                 }),
                 child: Consumer<SwipeProvider>(builder: (context, val, _) {
@@ -113,13 +112,14 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(15),
                                 color: Colors.grey),
                             child: SizedBox(
-                                height: size.height * 0.72,
-                                width: size.width * 0.9,
-                                child: const Text(""),),
+                              height: size.height * 0.72,
+                              width: size.width * 0.9,
+                              child: const Text(""),
+                            ),
                           ),
                         ),
                       //right
-                      if (providerWatch.currentIndex == 4)
+                      if (providerWatch.isLastPage)
                         const SizedBox()
                       else
                         Positioned(
@@ -130,9 +130,10 @@ class _HomePageState extends State<HomePage> {
                                 borderRadius: BorderRadius.circular(15),
                                 color: Colors.grey),
                             child: SizedBox(
-                                height: size.height * 0.72,
-                                width: size.width * 0.9,
-                                child: const Text(""),),
+                              height: size.height * 0.72,
+                              width: size.width * 0.9,
+                              child: const Text(""),
+                            ),
                           ),
                         )
                     ],
@@ -141,6 +142,8 @@ class _HomePageState extends State<HomePage> {
               ),
             ],
           );
+
+          ///
         }),
       ),
     );

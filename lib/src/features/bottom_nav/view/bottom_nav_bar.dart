@@ -6,6 +6,8 @@ import 'package:luvit/src/provider/provider.dart';
 import 'package:provider/provider.dart';
 
 class BottomNavBar extends StatefulWidget {
+  const BottomNavBar({super.key});
+
   @override
   _BottomNavBarState createState() => _BottomNavBarState();
 }
@@ -13,12 +15,12 @@ class BottomNavBar extends StatefulWidget {
 class _BottomNavBarState extends State<BottomNavBar> {
   int _selectedIndex = 0;
 
-  static const List<Widget> _screens = [
-    HomePage(),
-    Center(child: Text('Screen 2')),
-    Center(child: Text('Screen 3')),
-    Center(child: Text('Screen 4')),
-    Center(child: Text('Screen 5')),
+  static final List<Widget> _screens = [
+    const HomePage(),
+    const Center(child: Text('Screen 2')),
+    const Center(child: Text('Screen 3')),
+    const Center(child: Text('Screen 4')),
+    const Center(child: Text('Screen 5')),
   ];
 
   List iconList = [
